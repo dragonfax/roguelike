@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:spritewidget/spritewidget.dart';
 import 'sprites.dart';
+import 'animated_sprite.dart';
 
 class Terrain {
   final IconData icon;
@@ -47,11 +49,36 @@ class ArenaWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 10,
-      crossAxisSpacing: 1.0,
-      children: [ for ( var def in tileDatabase.values ) getTileWidget(def)],
-    );
+    var sheet = SpriteSheet(tileSetImage,spriteJS);
+    var root = NodeWithSize(const Size(256.0, 256.0));
+
+    var x = 0.0;
+    var y = 0.0;
+    var yAdd = 0.0;
+    for ( var tileDef in tileDatabase.values ) {
+      var name = tileDef.name;
+
+      var frameList = <Sprite>[];
+      for ( var frame=0; frame< tileDef.frames; frame++ ) {
+        var texture = sheet.textures["${name}_$frame"];
+        var sprite = Sprite(texture);
+        frameList.add(sprite);
+      }
+
+      var node = AnimatedSprite(frameList);
+      node.position = Offset(x,y);
+      root.addChild(node);
+      x += node.size.width;
+      if ( node.size.height > yAdd ) {
+        yAdd = node.size.height;
+      }
+      if ( x > 256 ) {
+        x = 0;
+        y += yAdd;
+        yAdd = 0;
+      }
+    }
+    return SpriteWidget(root, SpriteBoxTransformMode.scaleToFit);
   }
 }
 
