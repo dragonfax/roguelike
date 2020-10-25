@@ -65,7 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Material(
-        child: ArenaWidget(Arena()),
+        child: Container(
+            decoration: BoxDecoration(
+              color: Colors.black,
+            ),
+            child: ArenaWidget(Arena())),
       ),
     );
   }
