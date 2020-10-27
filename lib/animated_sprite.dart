@@ -1,19 +1,14 @@
 import 'package:spritewidget/spritewidget.dart';
-import 'dart:ui';
 import 'dart:math';
 
-class AnimatedSprite extends Node {
+class AnimatedSprite extends NodeWithSize {
   final List<Sprite> frames;
   Sprite currentFrame;
   int frameModifier;
 
-  Size get size {
-    return frames[0].size;
-  }
-
   static Random rand = Random();
 
-  AnimatedSprite(this.frames) {
+  AnimatedSprite(this.frames) : super(frames[0].size) {
     frameModifier = rand.nextInt(frames.length);
 
     if (frames.length > 1) {

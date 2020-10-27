@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'dart:ui' as ui;
 import 'package:spritewidget/spritewidget.dart';
 import 'animated_sprite.dart';
+import 'interactive_sprite.dart';
 
 const tileListFilename = 'assets/tiles_list_v1.3';
 const tileSetFilename = 'assets/0x72_DungeonTilesetII_v1.3.png';
@@ -88,7 +89,7 @@ Widget getTileWidget(TileDef def) {
 }
 */
 
-AnimatedSprite tileToNode(String tileName) {
+AnimatedSprite tileToNode(String tileName, [Function onClicked]) {
   var tileDef = tileDatabase[tileName];
   var frameList = <Sprite>[];
   for (var frame = 0; frame < tileDef.frames; frame++) {
@@ -97,5 +98,9 @@ AnimatedSprite tileToNode(String tileName) {
     frameList.add(sprite);
   }
 
-  return AnimatedSprite(frameList);
+  if (onClicked != null) {
+    return InterativeAnimatedSprite(frameList, onClicked);
+  } else {
+    return AnimatedSprite(frameList);
+  }
 }

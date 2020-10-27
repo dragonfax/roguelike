@@ -70,7 +70,9 @@ buildRandomMap(Node root) {
     }
   }
 
-  var node = tileToNode("wizzard_f_idle_anim");
+  var node = tileToNode("wizzard_f_idle_anim", () {
+    print("wizzard clicked");
+  });
   node.position = Offset(3.0 * 17, 8.0 * 17);
   root.addChild(node);
 
