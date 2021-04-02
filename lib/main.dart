@@ -34,7 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
           decoration: BoxDecoration(
             color: Colors.black,
           ),
-          child: ArenaWidget(Arena())),
+          // child: ArenaWidget(Arena())),
+          child: LevelEditor(),
     );
   }
 }
